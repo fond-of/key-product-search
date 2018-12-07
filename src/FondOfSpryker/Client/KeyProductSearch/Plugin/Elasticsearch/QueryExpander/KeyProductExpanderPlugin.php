@@ -9,9 +9,6 @@ use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Elastica\Query\AbstractQuery;
-use Elastica\Query\MatchAll;
-use Elastica\Query\MultiMatch;
 
 /**
  * @method \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchFactory getFactory()
@@ -40,8 +37,7 @@ class KeyProductExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
                 ->createTermQuery(
                     KeyProductSearchConstants::MODEL_KEY,
                     $requestParameters[KeyProductSearchConstants::MODEL_KEY]
-                )
-            );
+                ));
         }
 
         if (array_key_exists(KeyProductSearchConstants::STYLE_KEY, $requestParameters)) {
@@ -50,8 +46,7 @@ class KeyProductExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
                 ->createTermQuery(
                     KeyProductSearchConstants::STYLE_KEY,
                     $requestParameters[KeyProductSearchConstants::STYLE_KEY]
-                )
-            );
+                ));
         }
 
         $boolQuery->addMust($termQueries);
