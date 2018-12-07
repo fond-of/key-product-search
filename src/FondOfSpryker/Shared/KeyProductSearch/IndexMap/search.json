@@ -1,0 +1,18 @@
+{
+  "mappings": {
+    "page": {
+      "properties": {
+        "model_key": {
+          "type": "string",
+          "index": "not_analyzed",
+          "include_in_all": false
+        },
+        "style_key": {
+          "type": "string",
+          "index": "not_analyzed",
+          "include_in_all": false
+        }
+      }
+    }
+  }
+}
