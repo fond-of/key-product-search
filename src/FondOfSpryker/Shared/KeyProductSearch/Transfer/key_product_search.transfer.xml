@@ -13,4 +13,8 @@
         <property name="styleKey" type="string" />
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="similarProducts" type="array" />
+    </transfer>
+
 </transfers>
