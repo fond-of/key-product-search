@@ -26,7 +26,6 @@ class KeyProductSearchFactory extends AbstractFactory
     }
 
     /**
-     *
      * @return \FondOfSpryker\Client\KeyProductSearch\Dependency\Client\KeyProductSearchToProductStorageClientInterface
      */
     public function getProductStorageClient(): KeyProductSearchToProductStorageClientInterface
