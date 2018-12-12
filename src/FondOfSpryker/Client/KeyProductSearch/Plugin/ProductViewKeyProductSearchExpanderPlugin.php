@@ -18,7 +18,7 @@ class ProductViewKeyProductSearchExpanderPlugin extends AbstractPlugin implement
             ->getCatalogClient()
             ->catalogSearch('', [
                 KeyProductSearchConstants::MODEL_KEY => KeyProductSearchConstants::SHOE_MODEL_KEY,
-                KeyProductSearchConstants::STYLE_KEY => $productViewTransfer->getAttributes()['style_key'],
+                KeyProductSearchConstants::STYLE_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::STYLE_KEY],
             ]);
 
         $productViewTransfer->setSimilarProducts($this->getSimilarProductCollection($similarProducts, $localeName));

@@ -6,11 +6,13 @@
     <transfer name="PageMap">
         <property name="modelKey" type="string" />
         <property name="styleKey" type="string" />
+        <property name="size" type="string" />
     </transfer>
 
     <transfer name="ProductPageSearch">
         <property name="modelKey" type="string" />
         <property name="styleKey" type="string" />
+        <property name="size" type="string" />
     </transfer>
 
     <transfer name="ProductView">

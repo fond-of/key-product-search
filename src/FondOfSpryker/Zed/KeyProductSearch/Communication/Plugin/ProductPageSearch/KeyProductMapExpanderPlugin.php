@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\KeyProductSearch\Communication\Plugin\ProductPageSearch;
 
+use FondOfSpryker\Shared\KeyProductSearch\KeyProductSearchConstants;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -10,9 +11,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 
 class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
-    protected const MODEL_KEY = 'model_key';
-    protected const STYLE_KEY = 'style_key';
-
     /**
      * @api
      *
@@ -25,12 +23,16 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
      */
     public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
-        if (isset($productData[static::MODEL_KEY])) {
-            $pageMapTransfer->setModelKey($productData[static::MODEL_KEY]);
+        if (isset($productData[KeyProductSearchConstants::MODEL_KEY])) {
+            $pageMapTransfer->setModelKey($productData[KeyProductSearchConstants::MODEL_KEY]);
         }
 
-        if (isset($productData[static::STYLE_KEY])) {
-            $pageMapTransfer->setStyleKey($productData[static::STYLE_KEY]);
+        if (isset($productData[KeyProductSearchConstants::STYLE_KEY])) {
+            $pageMapTransfer->setStyleKey($productData[KeyProductSearchConstants::STYLE_KEY]);
+        }
+
+        if (isset($productData[KeyProductSearchConstants::SIZE_KEY])) {
+            $pageMapTransfer->setSize($productData[KeyProductSearchConstants::SIZE_KEY]);
         }
 
         return $pageMapTransfer;

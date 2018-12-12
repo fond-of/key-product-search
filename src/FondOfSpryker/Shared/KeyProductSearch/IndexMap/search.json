@@ -11,6 +11,11 @@
           "type": "string",
           "index": "not_analyzed",
           "include_in_all": false
+        },
+        "size": {
+          "type": "string",
+          "index": "not_analyzed",
+          "include_in_all": false
         }
       }
     }

@@ -24,7 +24,8 @@ class KeyProductExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
         if (!array_key_exists(KeyProductSearchConstants::MODEL_KEY, $requestParameters) &&
-            !array_key_exists(KeyProductSearchConstants::STYLE_KEY, $requestParameters)) {
+            !array_key_exists(KeyProductSearchConstants::STYLE_KEY, $requestParameters) &
+            !array_key_exists(KeyProductSearchConstants::SIZE_KEY, $requestParameters)) {
             return $searchQuery;
         }
 
@@ -46,6 +47,15 @@ class KeyProductExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
                 ->createTermQuery(
                     KeyProductSearchConstants::STYLE_KEY,
                     $requestParameters[KeyProductSearchConstants::STYLE_KEY]
+                ));
+        }
+
+        if (array_key_exists(KeyProductSearchConstants::SIZE_KEY, $requestParameters)) {
+            array_push($termQueries, $this->getFactory()
+                ->createQueryBuilder()
+                ->createTermQuery(
+                    KeyProductSearchConstants::SIZE_KEY,
+                    KeyProductSearchConstants::DEFAULT_SIZE
                 ));
         }
 
