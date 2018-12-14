@@ -11,6 +11,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
+ * @deprecated Use ModelKey-, StyleKey and SizeSearchExpander Plugin instead
  * @method \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchFactory getFactory()
  */
 class KeyProductExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface

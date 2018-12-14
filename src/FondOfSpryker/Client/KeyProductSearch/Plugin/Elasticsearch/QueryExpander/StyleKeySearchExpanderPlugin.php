@@ -10,11 +10,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
-/**
- * @deprecated Use ModelKey-, StyleKey and SizeSearchExpander Plugin instead
- * @method \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchFactory getFactory()
- */
-class MergeShoeSizesExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
+class StyleKeySearchExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
@@ -24,20 +20,18 @@ class MergeShoeSizesExpanderPlugin extends AbstractPlugin implements QueryExpand
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        if (!array_key_exists(KeyProductSearchConstants::CATEGORY, $requestParameters) ||
-            !in_array($requestParameters[KeyProductSearchConstants::CATEGORY], KeyProductSearchConstants::SHOE_CATEGORIES)) {
+        if (!array_key_exists(KeyProductSearchConstants::STYLE_KEY, $requestParameters)) {
             return $searchQuery;
         }
 
-        $term = $this->getFactory()
-            ->createQueryBuilder()
-            ->createTermQuery(
-                KeyProductSearchConstants::SIZE_KEY,
-                KeyProductSearchConstants::DEFAULT_SIZE
-            );
-
         $boolQuery = $this->getBoolQuery($searchQuery->getSearchQuery());
-        $boolQuery->addMust($term);
+
+        $matchQuery = $this->getFactory()
+            ->createQueryBuilder()
+            ->createMatchQuery()
+            ->setField(KeyProductSearchConstants::STYLE_KEY, $requestParameters[KeyProductSearchConstants::STYLE_KEY]);
+
+        $boolQuery->addMust($matchQuery);
 
         return $searchQuery;
     }

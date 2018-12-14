@@ -32,4 +32,9 @@ class KeyProductSearchFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(KeyProductSearchDependencyProvider::PRODUCT_STORAGE_CLIENT);
     }
+
+    public function createKeyProductSearchConfig()
+    {
+        return $this->getConfig();
+    }
 }
