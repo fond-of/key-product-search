@@ -12,9 +12,7 @@ interface KeyProductSearchConstants
 
     public const SIZE_KEY = 'size';
 
-    public const DEFAULT_SIZE = 'L';
+    public const MODEL_KEYS_FOR_SIZE_FILTER = 'MODEL_KEYS_FOR_SIZE';
 
-    public const CATEGORY = 'category';
-
-    public const SHOE_CATEGORIES = ['18'];
+    public const DONT_MERGE_SIZES = 'DONT_MERGE_SIZES';
 }

@@ -2,6 +2,7 @@
 
 namespace  FondOfSpryker\Client\KeyProductSearch;
 
+use Elastica\Query\BoolQuery;
 use FondOfSpryker\Client\KeyProductSearch\Dependency\Client\KeyProductSearchToCatalogClientInterface;
 use FondOfSpryker\Client\KeyProductSearch\Dependency\Client\KeyProductSearchToProductStorageClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -15,6 +16,14 @@ class KeyProductSearchFactory extends AbstractFactory
     public function createQueryBuilder()
     {
         return new QueryBuilder();
+    }
+
+    /**
+     * @return \Elastica\Query\BoolQuery
+     */
+    public function createBoolQuery()
+    {
+        return new BoolQuery();
     }
 
     /**
@@ -33,7 +42,10 @@ class KeyProductSearchFactory extends AbstractFactory
         return $this->getProvidedDependency(KeyProductSearchDependencyProvider::PRODUCT_STORAGE_CLIENT);
     }
 
-    public function createKeyProductSearchConfig()
+    /**
+     * @return \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchConfig
+     */
+    public function getKeyProductSearchConfig(): KeyProductSearchConfig
     {
         return $this->getConfig();
     }

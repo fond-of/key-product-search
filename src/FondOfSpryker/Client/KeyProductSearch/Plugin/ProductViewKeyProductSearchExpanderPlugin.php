@@ -12,13 +12,22 @@ use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInt
  */
 class ProductViewKeyProductSearchExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $productData
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
     public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
-        $similarProducts = $this->getFactory()
+        $similarProducts = $this
+            ->getFactory()
             ->getCatalogClient()
             ->catalogSearch('', [
                 KeyProductSearchConstants::MODEL_KEY => KeyProductSearchConstants::SHOE_MODEL_KEY,
                 KeyProductSearchConstants::STYLE_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::STYLE_KEY],
+                KeyProductSearchConstants::DONT_MERGE_SIZES => KeyProductSearchConstants::DONT_MERGE_SIZES,
             ]);
 
         $productViewTransfer->setSimilarProducts($this->getSimilarProductCollection($similarProducts, $localeName));
