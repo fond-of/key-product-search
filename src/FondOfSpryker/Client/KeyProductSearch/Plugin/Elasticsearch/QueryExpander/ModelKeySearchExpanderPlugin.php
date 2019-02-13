@@ -10,6 +10,9 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
+/**
+ * @method \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchFactory getFactory()
+ */
 class ModelKeySearchExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**

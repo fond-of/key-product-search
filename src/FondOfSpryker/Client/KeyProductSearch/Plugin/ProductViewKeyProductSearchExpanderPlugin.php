@@ -25,7 +25,7 @@ class ProductViewKeyProductSearchExpanderPlugin extends AbstractPlugin implement
             ->getFactory()
             ->getCatalogClient()
             ->catalogSearch('', [
-                KeyProductSearchConstants::MODEL_KEY => KeyProductSearchConstants::SHOE_MODEL_KEY,
+                KeyProductSearchConstants::MODEL_KEY => $productViewTransfer->getAttributes()['model_key'],
                 KeyProductSearchConstants::STYLE_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::STYLE_KEY],
                 KeyProductSearchConstants::DONT_MERGE_SIZES => KeyProductSearchConstants::DONT_MERGE_SIZES,
             ]);
