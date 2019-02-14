@@ -48,6 +48,26 @@ class SizeSearchExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             $boolQuery->addMust($this->createShouldModelKeyQuery($item));
         }
 
+        return $this->addSort($searchQuery);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    protected function addSort(QueryInterface $searchQuery): QueryInterface
+    {
+        $searchQuery
+            ->getSearchQuery()
+            ->addSort([
+                'size' => [
+                    'order' => 'ASC',
+                    'mode' => 'min',
+                    'unmapped_type' => 'integer',
+                ],
+            ]);
+
         return $searchQuery;
     }
 
