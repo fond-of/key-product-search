@@ -30,7 +30,24 @@ class ProductViewKeyProductSearchExpanderPlugin extends AbstractPlugin implement
                 KeyProductSearchConstants::DONT_MERGE_SIZES => KeyProductSearchConstants::DONT_MERGE_SIZES,
             ]);
 
-        $productViewTransfer->setSimilarProducts($this->getSimilarProductCollection($similarProducts, $localeName));
+        $productsWithSameStyleKey = $this
+            ->getFactory()
+            ->getCatalogClient()
+            ->catalogSearch('', [
+                KeyProductSearchConstants::STYLE_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::STYLE_KEY],
+            ]);
+
+        $productsWithSameModelKey = $this
+            ->getFactory()
+            ->getCatalogClient()
+            ->catalogSearch('', [
+                KeyProductSearchConstants::MODEL_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::MODEL_KEY],
+            ]);
+
+        //$productViewTransfer->setSimilarProducts($this->getSimilarProductCollection($similarProducts, $localeName))
+        $productViewTransfer->setSimilarProducts($similarProducts['products']);
+        $productViewTransfer->setProductsWithSameStyleKey($productsWithSameStyleKey['products']);
+        $productViewTransfer->setProductsWithSameModelKey($productsWithSameModelKey['products']);
 
         return $productViewTransfer;
     }

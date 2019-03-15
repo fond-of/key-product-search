@@ -17,6 +17,8 @@
 
     <transfer name="ProductView">
         <property name="similarProducts" type="array" />
+        <property name="productsWithSameStyleKey" type="array" />
+        <property name="productsWithSameModelKey" type="array" />
     </transfer>
 
 </transfers>
