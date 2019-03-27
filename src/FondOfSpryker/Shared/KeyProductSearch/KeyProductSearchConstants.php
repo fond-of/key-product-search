@@ -6,6 +6,8 @@ interface KeyProductSearchConstants
 {
     public const MODEL_KEY = 'model_key';
 
+    public const MODEL_SHORT = 'model_short';
+
     public const STYLE_KEY = 'style_key';
 
     public const SHOE_MODEL_KEY = 'crawling_shoe';
@@ -17,4 +19,6 @@ interface KeyProductSearchConstants
     public const DONT_MERGE_SIZES = 'DONT_MERGE_SIZES';
 
     public const PLUGIN_KEY_PRODUCT_DATA = 'PLUGIN_KEY_PRODUCT_DATA';
+
+    public const PLUGIN_SIZE_SWITCHER = 'PLUGIN_SIZE_SWITCHER';
 }

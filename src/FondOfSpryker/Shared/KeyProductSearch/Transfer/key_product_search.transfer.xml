@@ -19,6 +19,7 @@
         <property name="similarProducts" type="array" />
         <property name="productsWithSameStyleKey" type="array" />
         <property name="productsWithSameModelKey" type="array" />
+        <property name="productsSizeSwitcher" type="array" />
     </transfer>
 
 </transfers>
