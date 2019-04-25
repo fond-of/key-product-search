@@ -35,6 +35,10 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
             $pageMapTransfer->setSize($productData[KeyProductSearchConstants::SIZE_KEY]);
         }
 
+        if (isset($productData[KeyProductSearchConstants::MODEL_SHORT])) {
+            $pageMapTransfer->setModelShort($productData[KeyProductSearchConstants::MODEL_SHORT]);
+        }
+
         return $pageMapTransfer;
     }
 }

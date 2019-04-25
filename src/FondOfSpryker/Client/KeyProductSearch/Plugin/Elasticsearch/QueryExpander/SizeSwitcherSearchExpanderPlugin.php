@@ -23,12 +23,16 @@ class SizeSwitcherSearchExpanderPlugin extends AbstractPlugin implements QueryEx
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        if (!array_key_exists([
+        $needle = [
             KeyProductSearchConstants::STYLE_KEY,
             KeyProductSearchConstants::MODEL_SHORT,
             KeyProductSearchConstants::PLUGIN_SIZE_SWITCHER,
-        ], $requestParameters)) {
-            return $searchQuery;
+        ];
+
+        foreach ($needle as $item) {
+            if (!array_key_exists($item, $requestParameters)) {
+                return $searchQuery;
+            }
         }
 
         $boolQuery = $this->getBoolQuery($searchQuery->getSearchQuery());
@@ -36,7 +40,7 @@ class SizeSwitcherSearchExpanderPlugin extends AbstractPlugin implements QueryEx
         $matchQuery = $this->getFactory()
             ->createQueryBuilder()
             ->createMatchQuery()
-            ->setField(KeyProductSearchConstants::MODEL_KEY, $requestParameters[KeyProductSearchConstants::MODEL_KEY]);
+            ->setField(KeyProductSearchConstants::MODEL_SHORT, $requestParameters[KeyProductSearchConstants::MODEL_SHORT]);
 
         $boolQuery->addMust($matchQuery);
 

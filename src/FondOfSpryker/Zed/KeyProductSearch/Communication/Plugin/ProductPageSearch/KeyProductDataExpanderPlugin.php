@@ -32,5 +32,9 @@ class KeyProductDataExpanderPlugin extends AbstractPlugin implements ProductPage
         if (array_key_exists(KeyProductSearchConstants::SIZE_KEY, $attributes)) {
             $productAbstractPageSearchTransfer->setSize($attributes[KeyProductSearchConstants::SIZE_KEY]);
         }
+
+        if (array_key_exists(KeyProductSearchConstants::MODEL_SHORT, $attributes)) {
+            $productAbstractPageSearchTransfer->setModelShort($attributes[KeyProductSearchConstants::MODEL_SHORT]);
+        }
     }
 }
