@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\KeyProductSearch\Communication\Plugin\ProductPageSearch;
 
 use FondOfSpryker\Shared\KeyProductSearch\KeyProductSearchConstants;
+use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -33,6 +34,11 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
 
         if (isset($productData[KeyProductSearchConstants::SIZE_KEY])) {
             $pageMapTransfer->setSize($productData[KeyProductSearchConstants::SIZE_KEY]);
+
+            if (ctype_digit($productData[PageIndexMap::SIZE]) === true) {
+                $pageMapBuilder->addIntegerSort($pageMapTransfer, PageIndexMap::SIZE, $productData[PageIndexMap::SIZE]);
+                $pageMapBuilder->addIntegerFacet($pageMapTransfer, PageIndexMap::SIZE, $productData[PageIndexMap::SIZE]);
+            }
         }
 
         if (isset($productData[KeyProductSearchConstants::MODEL_SHORT])) {
