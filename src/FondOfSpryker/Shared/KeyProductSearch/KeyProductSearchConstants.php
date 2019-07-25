@@ -14,6 +14,8 @@ interface KeyProductSearchConstants
 
     public const SIZE_KEY = 'size';
 
+    public const IS_SOLD_OUT = 'is_sold_out';
+
     public const MODEL_KEYS_FOR_SIZE_FILTER = 'MODEL_KEYS_FOR_SIZE';
 
     public const DONT_MERGE_SIZES = 'DONT_MERGE_SIZES';
