@@ -93,13 +93,13 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
      */
     protected function setSize(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData): void
     {
+        $size = (ctype_digit($productData[PageIndexMap::SIZE]) === true) ?? 0;
+
+        $pageMapBuilder->addIntegerSort($pageMapTransfer, PageIndexMap::SIZE, $size);
+        $pageMapBuilder->addIntegerFacet($pageMapTransfer, PageIndexMap::SIZE, $size);
+
         if (isset($productData[KeyProductSearchConstants::SIZE_KEY])) {
             $pageMapTransfer->setSize($productData[KeyProductSearchConstants::SIZE_KEY]);
-
-            if (ctype_digit($productData[PageIndexMap::SIZE]) === true) {
-                $pageMapBuilder->addIntegerSort($pageMapTransfer, PageIndexMap::SIZE, $productData[PageIndexMap::SIZE]);
-                $pageMapBuilder->addIntegerFacet($pageMapTransfer, PageIndexMap::SIZE, $productData[PageIndexMap::SIZE]);
-            }
         }
     }
 }
