@@ -25,6 +25,7 @@ class KeyProductDataExpanderPlugin extends AbstractPlugin implements ProductPage
         $this->setStyleKey($productAbstractPageSearchTransfer, $attributes);
         $this->setSize($productAbstractPageSearchTransfer, $attributes);
         $this->setModelKey($productAbstractPageSearchTransfer, $attributes);
+        $this->setModelShort($productAbstractPageSearchTransfer, $attributes);
     }
 
     /**
