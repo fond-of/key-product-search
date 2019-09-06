@@ -7,6 +7,9 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
+/**
+ * @method \FondOfSpryker\Zed\KeyProductSearch\Communication\KeyProductSearchCommunicationFactory getFactory()
+ */
 class KeyProductDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
@@ -26,6 +29,8 @@ class KeyProductDataExpanderPlugin extends AbstractPlugin implements ProductPage
         $this->setSize($productAbstractPageSearchTransfer, $attributes);
         $this->setModelKey($productAbstractPageSearchTransfer, $attributes);
         $this->setModelShort($productAbstractPageSearchTransfer, $attributes);
+        $this->setIsSoldOut($productAbstractPageSearchTransfer, $attributes);
+        $this->setAvailable($productAbstractPageSearchTransfer, $attributes);
     }
 
     /**
@@ -88,8 +93,29 @@ class KeyProductDataExpanderPlugin extends AbstractPlugin implements ProductPage
      */
     protected function setIsSoldOut(ProductPageSearchTransfer $productAbstractPageSearchTransfer, array $attributes): void
     {
-        if (array_key_exists(KeyProductSearchConstants::IS_SOLD_OUT, $attributes)) {
-            $productAbstractPageSearchTransfer->setIsSoldOut($attributes[KeyProductSearchConstants::IS_SOLD_OUT]);
-        }
+        $soldOut = array_key_exists(KeyProductSearchConstants::IS_SOLD_OUT, $attributes) ?? false;
+
+        $productAbstractPageSearchTransfer->setIsSoldOut($soldOut);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
+     * @param array $attributes
+     *
+     * @return void
+     */
+    protected function setAvailable(ProductPageSearchTransfer $productAbstractPageSearchTransfer, array $attributes): void
+    {
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocale($productAbstractPageSearchTransfer->getLocale());
+
+        $productAbstractAvailabilityTransfer = $this->getFactory()
+            ->getAvailabilityFacade()
+            ->getProductAbstractAvailability($productAbstractPageSearchTransfer->getIdProductAbstract(), $localeTransfer->getIdLocale());
+
+        $available = $productAbstractAvailabilityTransfer->getAvailability() > 0 ? true : false;
+
+        $productAbstractPageSearchTransfer->setAvailable($available);
     }
 }

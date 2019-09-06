@@ -9,6 +9,7 @@
         <property name="size" type="string" />
         <property name="modelShort" type="string" />
         <property name="isSoldOut" type="string" />
+        <property name="available" type="boolean" />
     </transfer>
 
     <transfer name="ProductPageSearch">
@@ -17,6 +18,7 @@
         <property name="size" type="string" />
         <property name="modelShort" type="string" />
         <property name="isSoldOut" type="string" />
+        <property name="available" type="boolean" />
     </transfer>
 
     <transfer name="ProductView">
