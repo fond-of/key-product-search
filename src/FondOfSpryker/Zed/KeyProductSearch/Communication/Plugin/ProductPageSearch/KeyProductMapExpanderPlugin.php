@@ -129,7 +129,7 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
      */
     protected function setSize(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData): void
     {
-        $size = (ctype_digit($productData[PageIndexMap::SIZE]) === true) ?? 0;
+        $size = (ctype_digit($productData[PageIndexMap::SIZE]) === true) ? $productData[PageIndexMap::SIZE] : 0;
 
         $pageMapBuilder->addIntegerSort($pageMapTransfer, PageIndexMap::SIZE, $size);
         $pageMapBuilder->addIntegerFacet($pageMapTransfer, PageIndexMap::SIZE, $size);
