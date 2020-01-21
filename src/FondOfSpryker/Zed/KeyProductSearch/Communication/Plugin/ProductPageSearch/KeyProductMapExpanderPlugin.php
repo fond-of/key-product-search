@@ -10,6 +10,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
+/**
+ * @method \FondOfSpryker\Zed\KeyProductSearch\Communication\KeyProductSearchCommunicationFactory getFactory()
+ */
 class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
     /**
@@ -20,6 +23,8 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
      * @param array $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
+     * @throws
+     *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
     public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
@@ -27,6 +32,8 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
         $this->setModelKey($pageMapTransfer, $productData);
         $this->setStyleKey($pageMapTransfer, $productData);
         $this->setModelShort($pageMapTransfer, $productData);
+        $this->setIsSoldOut($pageMapTransfer, $pageMapBuilder, $productData);
+        $this->setAvailable($pageMapTransfer, $pageMapBuilder, $productData);
         $this->setSize($pageMapTransfer, $pageMapBuilder, $productData);
 
         return $pageMapTransfer;
@@ -73,15 +80,44 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
      *
      * @return void
      */
-    protected function setIsSoldOut(PageMapTransfer $pageMapTransfer, array $productData): void
+    protected function setIsSoldOut(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData): void
     {
-        if (isset($productData[KeyProductSearchConstants::IS_SOLD_OUT])) {
-            $pageMapTransfer->setIsSoldOut($productData[KeyProductSearchConstants::IS_SOLD_OUT]);
+        $soldOut = array_key_exists(KeyProductSearchConstants::IS_SOLD_OUT, $productData) ?? false;
+
+        $pageMapTransfer->setIsSoldOut($soldOut);
+        $pageMapBuilder->addSearchResultData($pageMapTransfer, KeyProductSearchConstants::IS_SOLD_OUT, $soldOut);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     *
+     * @return void
+     */
+    protected function setAvailable(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData): void
+    {
+        if (!array_key_exists('locale', $productData) || !array_key_exists('id_product_abstract', $productData)) {
+            return;
         }
+
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocale($productData['locale']);
+
+        $productAbstractAvailabilityTransfer = $this->getFactory()
+            ->getAvailabilityFacade()
+            ->getProductAbstractAvailability($productData['id_product_abstract'], $localeTransfer->getIdLocale());
+
+        $available = $productAbstractAvailabilityTransfer->getAvailability() > 0 ? true : false;
+
+        $pageMapTransfer->setAvailable($available);
+        $pageMapBuilder->addSearchResultData($pageMapTransfer, PageMapTransfer::AVAILABLE, $available);
     }
 
     /**
@@ -93,7 +129,7 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
      */
     protected function setSize(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData): void
     {
-        $size = (ctype_digit($productData[PageIndexMap::SIZE]) === true) ?? 0;
+        $size = (ctype_digit($productData[PageIndexMap::SIZE]) === true) ? $productData[PageIndexMap::SIZE] : 0;
 
         $pageMapBuilder->addIntegerSort($pageMapTransfer, PageIndexMap::SIZE, $size);
         $pageMapBuilder->addIntegerFacet($pageMapTransfer, PageIndexMap::SIZE, $size);
