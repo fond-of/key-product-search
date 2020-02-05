@@ -10,8 +10,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class KeyProductSearchCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\KeyProductSearch\Dependency\Facade\KeyProductSearchToAvailabilityFacadeInterface
      */
     public function getAvailabilityFacade(): KeyProductSearchToAvailabilityFacadeInterface
@@ -20,8 +18,6 @@ class KeyProductSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\KeyProductSearch\Dependency\Facade\KeyProductSearchToLocaleFacadeInterface
      */
     public function getLocaleFacade(): KeyProductSearchToLocaleFacadeInterface

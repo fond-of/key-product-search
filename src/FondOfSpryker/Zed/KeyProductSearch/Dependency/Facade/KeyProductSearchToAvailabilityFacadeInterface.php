@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FondOfSpryker\Zed\KeyProductSearch\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;

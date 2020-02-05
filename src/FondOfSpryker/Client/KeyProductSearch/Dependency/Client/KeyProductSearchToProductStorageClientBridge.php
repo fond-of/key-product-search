@@ -17,7 +17,7 @@ class KeyProductSearchToProductStorageClientBridge implements KeyProductSearchTo
     }
 
     /**
-     * @return void
+     * @return null|void
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
     {

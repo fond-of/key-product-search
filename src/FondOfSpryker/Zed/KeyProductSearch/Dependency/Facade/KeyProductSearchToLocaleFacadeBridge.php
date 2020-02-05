@@ -23,8 +23,6 @@ class KeyProductSearchToLocaleFacadeBridge implements KeyProductSearchToLocaleFa
     /**
      * @param string $localeName
      *
-     * @throws
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale(string $localeName): LocaleTransfer

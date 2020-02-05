@@ -14,6 +14,7 @@ use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 
 /**
  * Class SizeSearchExpanderPlugin
+ *
  * @package FondOfSpryker\Client\KeyProductSearch\Plugin\Elasticsearch\QueryExpander
  * @method \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchFactory getFactory()
  */
@@ -23,10 +24,7 @@ class SizeSearchExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      * @var \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchConfig
      */
     protected $config;
-
-    /**
-     * SizeSearchExpanderPlugin constructor.
-     */
+    
     public function __construct()
     {
         $this->config = $this->getFactory()->getKeyProductSearchConfig();
