@@ -7,27 +7,28 @@ use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface;
 
 /**
  * @method \FondOfSpryker\Zed\KeyProductSearch\Communication\KeyProductSearchCommunicationFactory getFactory()
  */
-class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
+class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     /**
+     * Specification:
+     * - Expands and returns the provided PageMapTransfer objects data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @throws
-     *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
+    public function expandProductMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
         $this->setModelKey($pageMapTransfer, $productData);
         $this->setStyleKey($pageMapTransfer, $productData);
@@ -114,7 +115,11 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductPageM
             ->getAvailabilityFacade()
             ->getProductAbstractAvailability($productData['id_product_abstract'], $localeTransfer->getIdLocale());
 
-        $available = $productAbstractAvailabilityTransfer->getAvailability() > 0 ? true : false;
+        $availability = $productAbstractAvailabilityTransfer->getAvailability();
+        $available = false;
+        if ($availability !== null && $availability->toInt() > 0){
+        $available = true;
+        }
 
         $pageMapTransfer->setAvailable($available);
         $pageMapBuilder->addSearchResultData($pageMapTransfer, PageMapTransfer::AVAILABLE, $available);
