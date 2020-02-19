@@ -40,6 +40,6 @@ class KeyProductSearchToAvailabilityFacadeBridge implements KeyProductSearchToAv
      */
     public function findProductAbstractAvailability(int $idProductAbstract, int $idLocale, int $idStore): ?ProductAbstractAvailabilityTransfer
     {
-        return $this->findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
+        return $this->availabilityFacade->findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
     }
 }
