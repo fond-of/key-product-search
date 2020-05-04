@@ -107,13 +107,11 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductAbstr
             return;
         }
 
-        $localeTransfer = $this->getFactory()
-            ->getLocaleFacade()
-            ->getLocale($productData['locale']);
+        $storeTransfer = $this->getFactory()->getStoreFacade()->findStoreByName($productData['store']);
 
         $productAbstractAvailabilityTransfer = $this->getFactory()
             ->getAvailabilityFacade()
-            ->getProductAbstractAvailability($productData['id_product_abstract'], $localeTransfer->getIdLocale());
+            ->findOrCreateProductAbstractAvailabilityBySkuForStore($productData['sku'], $storeTransfer);
 
         $availability = $productAbstractAvailabilityTransfer->getAvailability();
         $available = false;

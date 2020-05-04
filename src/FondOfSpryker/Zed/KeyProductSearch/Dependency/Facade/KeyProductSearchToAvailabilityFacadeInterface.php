@@ -3,23 +3,18 @@
 namespace FondOfSpryker\Zed\KeyProductSearch\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface KeyProductSearchToAvailabilityFacadeInterface
 {
     /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
-     */
-    public function getProductAbstractAvailability(int $idProductAbstract, int $idLocale): ProductAbstractAvailabilityTransfer;
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     * @param int $idStore
+     * @param  string  $sku
+     * @param  \Generated\Shared\Transfer\StoreTransfer  $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailability(int $idProductAbstract, int $idLocale, int $idStore): ?ProductAbstractAvailabilityTransfer;
+    public function findOrCreateProductAbstractAvailabilityBySkuForStore(
+        string $sku,
+        StoreTransfer $storeTransfer
+    ): ?ProductAbstractAvailabilityTransfer;
 }

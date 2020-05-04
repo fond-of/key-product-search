@@ -4,6 +4,7 @@ namespace FondOfSpryker\Zed\KeyProductSearch\Communication\Plugin\ProductPageSea
 
 use FondOfSpryker\Shared\KeyProductSearch\KeyProductSearchConstants;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
@@ -106,20 +107,18 @@ class KeyProductDataExpanderPlugin extends AbstractPlugin implements ProductPage
      */
     protected function setAvailable(ProductPageSearchTransfer $productAbstractPageSearchTransfer, array $attributes): void
     {
-        $localeTransfer = $this->getFactory()
-            ->getLocaleFacade()
-            ->getLocale($productAbstractPageSearchTransfer->getLocale());
+        $storeTransfer = $this->getFactory()->getStoreFacade()->findStoreByName($productAbstractPageSearchTransfer->getStore());
 
         $productAbstractAvailabilityTransfer = $this->getFactory()
             ->getAvailabilityFacade()
-            ->getProductAbstractAvailability($productAbstractPageSearchTransfer->getIdProductAbstract(), $localeTransfer->getIdLocale());
+            ->findOrCreateProductAbstractAvailabilityBySkuForStore($productAbstractPageSearchTransfer->getSku(), $storeTransfer);
 
         $availability = $productAbstractAvailabilityTransfer->getAvailability();
         $available = false;
         if ($availability !== null && $availability->toInt() > 0){
             $available = true;
         }
-        
+
         $productAbstractPageSearchTransfer->setAvailable($available);
     }
 }

@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\KeyProductSearch\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
 
 class KeyProductSearchToAvailabilityFacadeBridge implements KeyProductSearchToAvailabilityFacadeInterface
@@ -13,7 +14,7 @@ class KeyProductSearchToAvailabilityFacadeBridge implements KeyProductSearchToAv
     protected $availabilityFacade;
 
     /**
-     * @param \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface $availabilityFacade
+     * @param  \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface  $availabilityFacade
      */
     public function __construct(AvailabilityFacadeInterface $availabilityFacade)
     {
@@ -21,25 +22,15 @@ class KeyProductSearchToAvailabilityFacadeBridge implements KeyProductSearchToAv
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
-     */
-    public function getProductAbstractAvailability(int $idProductAbstract, int $idLocale): ProductAbstractAvailabilityTransfer
-    {
-        return $this->availabilityFacade->getProductAbstractAvailability($idProductAbstract, $idLocale);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     * @param int $idStore
+     * @param  string  $sku
+     * @param  \Generated\Shared\Transfer\StoreTransfer  $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailability(int $idProductAbstract, int $idLocale, int $idStore): ?ProductAbstractAvailabilityTransfer
-    {
-        return $this->availabilityFacade->findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
+    public function findOrCreateProductAbstractAvailabilityBySkuForStore(
+        string $sku,
+        StoreTransfer $storeTransfer
+    ): ?ProductAbstractAvailabilityTransfer {
+        return $this->availabilityFacade->findOrCreateProductAbstractAvailabilityBySkuForStore($sku, $storeTransfer);
     }
 }
