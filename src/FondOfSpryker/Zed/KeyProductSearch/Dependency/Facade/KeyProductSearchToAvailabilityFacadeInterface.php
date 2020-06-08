@@ -8,8 +8,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface KeyProductSearchToAvailabilityFacadeInterface
 {
     /**
-     * @param  string  $sku
-     * @param  \Generated\Shared\Transfer\StoreTransfer  $storeTransfer
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */

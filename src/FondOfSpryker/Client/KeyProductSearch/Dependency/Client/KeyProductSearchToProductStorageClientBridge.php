@@ -12,7 +12,7 @@ class KeyProductSearchToProductStorageClientBridge implements KeyProductSearchTo
     protected $productStorageClient;
 
     /**
-     * @param ProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Client\ProductStorage\ProductStorageClientInterface $productStorageClient
      */
     public function __construct(ProductStorageClientInterface $productStorageClient)
     {

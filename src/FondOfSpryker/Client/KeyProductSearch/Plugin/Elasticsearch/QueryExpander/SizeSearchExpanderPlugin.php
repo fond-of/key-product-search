@@ -8,9 +8,9 @@ use FondOfSpryker\Shared\KeyProductSearch\KeyProductSearchConstants;
 use Generated\Shared\Search\PageIndexMap;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 
 /**
  * Class SizeSearchExpanderPlugin

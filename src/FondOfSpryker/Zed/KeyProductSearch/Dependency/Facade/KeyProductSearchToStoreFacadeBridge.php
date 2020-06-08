@@ -13,9 +13,7 @@ class KeyProductSearchToStoreFacadeBridge implements KeyProductSearchToStoreFaca
     protected $storeFacade;
 
     /**
-     * KeyProductSearchToStoreFacadeBridge constructor.
-     *
-     * @param  \Spryker\Zed\Store\Business\StoreFacadeInterface  $storeFacade
+     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
      */
     public function __construct(StoreFacadeInterface $storeFacade)
     {
@@ -23,13 +21,12 @@ class KeyProductSearchToStoreFacadeBridge implements KeyProductSearchToStoreFaca
     }
 
     /**
-     * @param  string  $storeName
+     * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function findStoreByName(
-        string $storeName
-    ): ?StoreTransfer {
+    public function findStoreByName(string $storeName): StoreTransfer
+    {
         return $this->storeFacade->findStoreByName($storeName);
     }
 }

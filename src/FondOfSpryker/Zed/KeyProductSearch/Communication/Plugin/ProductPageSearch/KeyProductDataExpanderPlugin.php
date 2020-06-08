@@ -4,7 +4,6 @@ namespace FondOfSpryker\Zed\KeyProductSearch\Communication\Plugin\ProductPageSea
 
 use FondOfSpryker\Shared\KeyProductSearch\KeyProductSearchConstants;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 

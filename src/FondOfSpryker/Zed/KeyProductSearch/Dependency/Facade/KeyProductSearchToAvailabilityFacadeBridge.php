@@ -14,7 +14,7 @@ class KeyProductSearchToAvailabilityFacadeBridge implements KeyProductSearchToAv
     protected $availabilityFacade;
 
     /**
-     * @param  \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface  $availabilityFacade
+     * @param \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface $availabilityFacade
      */
     public function __construct(AvailabilityFacadeInterface $availabilityFacade)
     {
@@ -22,8 +22,8 @@ class KeyProductSearchToAvailabilityFacadeBridge implements KeyProductSearchToAv
     }
 
     /**
-     * @param  string  $sku
-     * @param  \Generated\Shared\Transfer\StoreTransfer  $storeTransfer
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
