@@ -7,6 +7,7 @@ use Elastica\Query\BoolQuery;
 use FondOfSpryker\Shared\KeyProductSearch\KeyProductSearchConstants;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
