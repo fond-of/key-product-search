@@ -25,7 +25,9 @@ class ProductViewKeyProductSearchExpanderPlugin extends AbstractPlugin implement
             ->setSimilarProducts($this->getSimilarProducts($productViewTransfer))
             ->setProductsWithSameStyleKey($this->getProductsWithSameStyleKey($productViewTransfer))
             ->setProductsWithSameModelKey($this->getProductsWithSameModelKey($productViewTransfer))
-            ->setProductsSizeSwitcher($this->getProductsSizeSwitcher($productViewTransfer));
+            ->setProductsSizeSwitcher($this->getProductsSizeSwitcher($productViewTransfer))
+            ->setProductsWithSameModelKeyAndSize($this->getProductsWithSameModelKeyAndSize($productViewTransfer))
+            ->setProductsWithSameModelKeyAndStyleKey($this->getProductsWithSameModelKeyAndStyleKey($productViewTransfer));
 
         return $productViewTransfer;
     }
@@ -41,7 +43,7 @@ class ProductViewKeyProductSearchExpanderPlugin extends AbstractPlugin implement
             ->getFactory()
             ->getCatalogClient()
             ->catalogSearch('', [
-                KeyProductSearchConstants::MODEL_KEY => $productViewTransfer->getAttributes()['model_key'],
+                KeyProductSearchConstants::MODEL_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::MODEL_KEY],
                 KeyProductSearchConstants::STYLE_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::STYLE_KEY],
                 KeyProductSearchConstants::DONT_MERGE_SIZES => KeyProductSearchConstants::DONT_MERGE_SIZES,
             ])['products'];
@@ -110,5 +112,35 @@ class ProductViewKeyProductSearchExpanderPlugin extends AbstractPlugin implement
         }
 
         return $collection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return array
+     */
+    protected function getProductsWithSameModelKeyAndSize(ProductViewTransfer $productViewTransfer): array
+    {
+        return $this->getFactory()
+            ->getCatalogClient()
+            ->catalogSearch('', [
+                KeyProductSearchConstants::MODEL_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::MODEL_KEY],
+                KeyProductSearchConstants::SIZE_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::SIZE_KEY],
+            ])['products'];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return array
+     */
+    protected function getProductsWithSameModelKeyAndStyleKey(ProductViewTransfer $productViewTransfer): array
+    {
+        return $this->getFactory()
+            ->getCatalogClient()
+            ->catalogSearch('', [
+                KeyProductSearchConstants::MODEL_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::MODEL_KEY],
+                KeyProductSearchConstants::STYLE_KEY => $productViewTransfer->getAttributes()[KeyProductSearchConstants::STYLE_KEY],
+            ])['products'];
     }
 }

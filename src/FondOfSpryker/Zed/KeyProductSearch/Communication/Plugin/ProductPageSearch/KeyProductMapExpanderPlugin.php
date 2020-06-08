@@ -28,8 +28,12 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductAbstr
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
-    {
+    public function expandProductMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
         $this->setModelKey($pageMapTransfer, $productData);
         $this->setStyleKey($pageMapTransfer, $productData);
         $this->setModelShort($pageMapTransfer, $productData);
@@ -113,11 +117,7 @@ class KeyProductMapExpanderPlugin extends AbstractPlugin implements ProductAbstr
             ->getAvailabilityFacade()
             ->findOrCreateProductAbstractAvailabilityBySkuForStore($productData['sku'], $storeTransfer);
 
-        $availability = $productAbstractAvailabilityTransfer->getAvailability();
-        $available = false;
-        if ($availability !== null && $availability->toInt() > 0){
-        $available = true;
-        }
+        $available = $productAbstractAvailabilityTransfer->getAvailability()->greaterThan(0) ? true : false;
 
         $pageMapTransfer->setAvailable($available);
         $pageMapBuilder->addSearchResultData($pageMapTransfer, PageMapTransfer::AVAILABLE, $available);

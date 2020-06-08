@@ -113,11 +113,7 @@ class KeyProductDataExpanderPlugin extends AbstractPlugin implements ProductPage
             ->getAvailabilityFacade()
             ->findOrCreateProductAbstractAvailabilityBySkuForStore($productAbstractPageSearchTransfer->getSku(), $storeTransfer);
 
-        $availability = $productAbstractAvailabilityTransfer->getAvailability();
-        $available = false;
-        if ($availability !== null && $availability->toInt() > 0){
-            $available = true;
-        }
+        $available = $productAbstractAvailabilityTransfer->getAvailability()->greaterThan(0) ? true : false;
 
         $productAbstractPageSearchTransfer->setAvailable($available);
     }
