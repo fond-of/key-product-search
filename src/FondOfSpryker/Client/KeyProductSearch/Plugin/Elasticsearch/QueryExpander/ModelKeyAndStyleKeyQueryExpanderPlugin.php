@@ -5,14 +5,17 @@ namespace FondOfSpryker\Client\KeyProductSearch\Plugin\Elasticsearch\QueryExpand
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use FondOfSpryker\Shared\KeyProductSearch\KeyProductSearchConstants;
-use InvalidArgumentException;
+use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\SearchElasticsearch\Config\SortConfig;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
+ * @package FondOfSpryker\Client\KeyProductSearch\Plugin\Elasticsearch\QueryExpander
  * @method \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchFactory getFactory()
  */
-class ModelKeySearchExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
+class ModelKeyAndStyleKeyQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
      * Specification:
@@ -31,16 +34,45 @@ class ModelKeySearchExpanderPlugin extends AbstractPlugin implements QueryExpand
             return $searchQuery;
         }
 
+        if (!array_key_exists(KeyProductSearchConstants::STYLE_KEY, $requestParameters)) {
+            return $searchQuery;
+        }
+
+        $modelKey = $requestParameters[KeyProductSearchConstants::MODEL_KEY];
+        $styleKey = $requestParameters[KeyProductSearchConstants::STYLE_KEY];
         $boolQuery = $this->getBoolQuery($searchQuery->getSearchQuery());
 
-        $matchQuery = $this->getFactory()
+        $matchModelKeyQuery = $this->getFactory()
             ->createQueryBuilder()
             ->createMatchQuery()
-            ->setField(KeyProductSearchConstants::MODEL_KEY, $requestParameters[KeyProductSearchConstants::MODEL_KEY]);
+            ->setField(KeyProductSearchConstants::MODEL_KEY, $modelKey);
 
-        $boolQuery->addMust($matchQuery);
+        $matchStyleKeyQuery = $this->getFactory()
+            ->createQueryBuilder()
+            ->createMatchQuery()
+            ->setField(KeyProductSearchConstants::STYLE_KEY, $styleKey);
+
+        $boolQuery->addMust($matchModelKeyQuery);
+        $boolQuery->addMust($matchStyleKeyQuery);
+
+        $this->addSort($searchQuery->getSearchQuery());
 
         return $searchQuery;
+    }
+
+    /**
+     * @param \Elastica\Query $searchQuery
+     *
+     * @return void
+     */
+    protected function addSort(Query $searchQuery): void
+    {
+        $searchQuery->addSort([
+            PageIndexMap::INTEGER_SORT . '.' . PageIndexMap::SIZE => [
+                'order' => SortConfig::DIRECTION_ASC,
+                'mode' => 'min',
+            ],
+        ]);
     }
 
     /**

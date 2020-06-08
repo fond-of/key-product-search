@@ -10,7 +10,7 @@ use Spryker\Client\Kernel\Container;
 class KeyProductSearchDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
-    const PRODUCT_STORAGE_CLIENT = 'PRODUCT_STORAGE_CLIENT';
+    public const PRODUCT_STORAGE_CLIENT = 'PRODUCT_STORAGE_CLIENT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

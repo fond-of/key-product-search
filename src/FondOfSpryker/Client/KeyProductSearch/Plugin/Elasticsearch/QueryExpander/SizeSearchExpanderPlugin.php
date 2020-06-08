@@ -8,12 +8,13 @@ use FondOfSpryker\Shared\KeyProductSearch\KeyProductSearchConstants;
 use Generated\Shared\Search\PageIndexMap;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 
 /**
  * Class SizeSearchExpanderPlugin
+ *
  * @package FondOfSpryker\Client\KeyProductSearch\Plugin\Elasticsearch\QueryExpander
  * @method \FondOfSpryker\Client\KeyProductSearch\KeyProductSearchFactory getFactory()
  */
@@ -24,9 +25,6 @@ class SizeSearchExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      */
     protected $config;
 
-    /**
-     * SizeSearchExpanderPlugin constructor.
-     */
     public function __construct()
     {
         $this->config = $this->getFactory()->getKeyProductSearchConfig();

@@ -11,13 +11,16 @@ class KeyProductSearchToProductStorageClientBridge implements KeyProductSearchTo
      */
     protected $productStorageClient;
 
+    /**
+     * @param ProductStorageClientInterface $productStorageClient
+     */
     public function __construct(ProductStorageClientInterface $productStorageClient)
     {
         $this->productStorageClient = $productStorageClient;
     }
 
     /**
-     * @return void
+     * @return null|array
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
     {
